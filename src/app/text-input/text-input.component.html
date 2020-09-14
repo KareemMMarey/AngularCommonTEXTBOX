@@ -1,0 +1,67 @@
+<div class="form-label-group">
+  <input
+    [ngClass]="
+      controlDir && controlDir.control && controlDir.control.touched
+        ? !controlDir.control.valid
+          ? 'is-invalid'
+          : 'is-valid'
+        : null
+    "
+    [type]="type"
+    (input)="onChange($event.target.value)"
+    (blur)="onTouched()"
+    id="{{ label }}"
+    #input
+    class="form-control"
+    placeholder="{{ label }}"
+  />
+  <div
+    *ngIf="
+      controlDir &&
+      controlDir.control &&
+      controlDir.control.status === 'PENDING'
+    "
+    class="fa fa-spinner fa-spin loader"
+  ></div>
+  <label for="{{ label }}"
+    ><span>{{ label }} <i>*</i></span></label
+  >
+  <div
+    class="invalid-feedback"
+    *ngIf="
+      controlDir &&
+      controlDir.control &&
+      !controlDir.control.valid &&
+      controlDir.control.touched
+    "
+  >
+    <span class="" *ngIf="controlDir.control.errors?.required"
+      >{{ label }} {{ "FormComponent.Required" | translate }}</span
+    >
+    <span class="" *ngIf="controlDir.control.errors?.pattern"
+      >{{ label }} {{ "FormComponent.NotValid" | translate }}</span
+    >
+  </div>
+  <div
+    class="invalid-feedback d-block"
+    *ngIf="
+      controlDir &&
+      controlDir.control &&
+      !controlDir.control.valid &&
+      controlDir.control.dirty
+    "
+  >
+    <span class="" *ngIf="controlDir.control.errors?.emailExists"
+      >{{ label }} {{ "FormComponent.InUse" | translate }}</span
+    >
+  </div>
+  <span *ngIf="hasTooltip" class="help">
+    <a
+      href="javascript:;"
+      attr.data-toggle="tooltip"
+      attr.data-html="true"
+      title="{{ toolTipMessage }}"
+    >
+      <img src="assets/ar/img/help-outline.png" /></a
+  ></span>
+</div>
